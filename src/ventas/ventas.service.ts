@@ -25,7 +25,6 @@ export class VentasService {
         empresa: Like(`%${empresa || ''}%`),
         producto: Like(`%${producto || ''}%`),
       },
-      take: 10,
     });
   }
 }
