@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Empresa } from '../empresas/entities/empresa.entity';
 import { Persona } from '../personas/entities/persona.entity';
 
@@ -11,8 +11,10 @@ export class Telefono {
   numero: number;
 
   @ManyToOne(() => Empresa, (empresa) => empresa.telefonos)
+  @JoinColumn({ name: 'fk_empresa' })
   empresa: Empresa;
 
   @ManyToOne(() => Persona, (persona) => persona.telefonos)
+  @JoinColumn({ name: 'fk_persona' })
   persona: Persona;
 }

@@ -12,10 +12,17 @@ export class PersonasService {
   ) {}
 
   findAll() {
-    return this.personaRepo.find();
+    return this.personaRepo
+      .createQueryBuilder('personas')
+      .leftJoinAndSelect('personas.telefonos', 'telefono')
+      .getMany();
   }
 
   async findOne(id: number) {
-    return await this.personaRepo.findOne({ where: { id } });
+    return await this.personaRepo
+      .createQueryBuilder('personas')
+      .leftJoinAndSelect('personas.telefonos', 'telefono')
+      .where({ id })
+      .getOne();
   }
 }

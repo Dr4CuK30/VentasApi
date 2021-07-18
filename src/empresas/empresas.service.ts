@@ -11,7 +11,10 @@ export class EmpresasService {
   ) {}
 
   async findAll() {
-    return await this.empresaRepo.find();
+    return await this.empresaRepo
+      .createQueryBuilder('personas')
+      .leftJoinAndSelect('personas.telefonos', 'telefono')
+      .getMany();
   }
   async findProductosByEmpresa(id: number) {
     const empresa = await this.empresaRepo
