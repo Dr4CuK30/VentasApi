@@ -16,6 +16,9 @@ export class Venta {
   @Column({ name: 'n_cantidad', type: 'int' })
   cantidad: number;
 
+  @Column({ name: 'f_fecha', type: 'date' })
+  fecha: Date;
+
   @ManyToOne(() => Producto, (producto) => producto.ventas)
   @JoinColumn({ name: 'fk_producto' })
   producto: Producto;

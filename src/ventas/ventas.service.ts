@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository, Between } from 'typeorm';
 import { CreateVentaDto } from './dto/create-venta.dto';
-import { UpdateVentaDto } from './dto/update-venta.dto';
 import { Venta } from './entities/venta.entity';
 import { VistaVenta } from './entities/vista-venta.entity';
 
@@ -26,5 +25,9 @@ export class VentasService {
         producto: Like(`%${producto || ''}%`),
       },
     });
+  }
+  async create(createVentaDto: CreateVentaDto) {
+    const venta = { ...createVentaDto, fecha: new Date() };
+    return await this.ventasRepo.save(venta);
   }
 }

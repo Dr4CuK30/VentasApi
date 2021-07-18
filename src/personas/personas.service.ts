@@ -19,8 +19,8 @@ export class PersonasService {
     return this.personaRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} persona`;
+  async findOne(id: number) {
+    return await this.personaRepo.findOne({ where: { id } });
   }
 
   update(id: number, updatePersonaDto: UpdatePersonaDto) {
