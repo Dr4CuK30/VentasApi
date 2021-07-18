@@ -19,12 +19,12 @@ export class EmpresasService {
     return await this.empresaRepo.find();
   }
   async findProductosByEmpresa(id: number) {
-    const { productos } = await this.empresaRepo
+    const empresa = await this.empresaRepo
       .createQueryBuilder('empresa')
       .innerJoinAndSelect('empresa.productos', 'producto')
       .where(`empresa.id = ${id}`)
       .getOne();
-    return productos;
+    return empresa?.productos || [];
   }
 
   findOne(id: number) {
