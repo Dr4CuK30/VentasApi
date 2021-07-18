@@ -1,15 +1,30 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateEmpresaDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
+import { Empresa } from './entities/empresa.entity';
 
 @Injectable()
 export class EmpresasService {
+  constructor(
+    @InjectRepository(Empresa)
+    private readonly empresaRepo: Repository<Empresa>,
+  ) {}
   create(createEmpresaDto: CreateEmpresaDto) {
     return 'This action adds a new empresa';
   }
 
-  findAll() {
-    return `This action returns all empresas`;
+  async findAll() {
+    return await this.empresaRepo.find();
+  }
+  async findProductosByEmpresa(id: number) {
+    const { productos } = await this.empresaRepo
+      .createQueryBuilder('empresa')
+      .innerJoinAndSelect('empresa.productos', 'producto')
+      .where(`empresa.id = ${id}`)
+      .getOne();
+    return productos;
   }
 
   findOne(id: number) {

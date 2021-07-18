@@ -8,13 +8,13 @@ export class Persona {
   id: number;
 
   @Column({ name: 'v_nombre' })
-  razon_social: string;
+  nombre: string;
 
   @Column({ name: 'v_correo' })
-  direccion: string;
+  correo: string;
 
   @Column({ name: 'f_fecha_nacimiento', type: 'date' })
-  correo: Date;
+  fecha: Date;
 
   @OneToMany(() => Telefono, (telefono) => telefono.persona)
   telefonos: Telefono[];

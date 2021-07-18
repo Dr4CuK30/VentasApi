@@ -1,5 +1,13 @@
 import { Venta } from 'src/ventas/entities/venta.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Empresa } from '../../empresas/entities/empresa.entity';
 
 @Entity()
 export class Producto {
@@ -17,6 +25,10 @@ export class Producto {
 
   @Column({ name: 'e_tipo' })
   tipo: string;
+
+  @ManyToOne(() => Empresa, (empresa) => empresa.productos)
+  @JoinColumn({ name: 'fk_empresa' })
+  empresa: Empresa;
 
   @OneToMany(() => Venta, (venta) => venta.producto)
   ventas: Venta[];
